@@ -42,8 +42,8 @@ public class CharacterController2D : MonoBehaviour
     {
         coll = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
+        sr = GetComponentInChildren<SpriteRenderer>();
 
         rb.gravityScale = gravityScale;
         deathBurstParticles.Stop();
