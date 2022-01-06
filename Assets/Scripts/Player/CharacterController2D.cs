@@ -37,6 +37,7 @@ public class CharacterController2D : MonoBehaviour
     private bool facingRight = true;
     private bool isGrounded = false;
     private bool disableMovement = false;
+    private bool deathThisFrame = false;
 
     private void Awake()
     {
@@ -59,8 +60,16 @@ public class CharacterController2D : MonoBehaviour
     private void OnDestroy() 
     {
         // unsubscribe from events
-        GameEventsManager.instance.onGoalReached += OnGoalReached;
-        GameEventsManager.instance.onRestartLevel += OnRestartLevel;
+        GameEventsManager.instance.onGoalReached -= OnGoalReached;
+        GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
+    }
+
+    private void Update() 
+    {
+        // record frame info for replay
+        ReplayFrameInfo info = new ReplayFrameInfo((Vector2) this.transform.position, isGrounded, rb.velocity, sr.color.a, deathThisFrame);
+        GameEventsManager.instance.CaptureReplayFrame(info);
+        deathThisFrame = false;
     }
 
     private void FixedUpdate()
@@ -162,6 +171,7 @@ public class CharacterController2D : MonoBehaviour
         rb.velocity = Vector3.zero;
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
         deathBurstParticles.Play();
+        deathThisFrame = true;
 
         yield return new WaitForSeconds(0.4f);
         
