@@ -15,10 +15,6 @@ public class GameEventsManager : MonoBehaviour
     }
 
     public event Action onGoalReached;
-    public event Action onRestartLevel;
-    public event Action<ReplayFrameInfo> onCaptureReplayFrame;
-    public event Action onResetReplay;
-
     public void GoalReached() 
     {
         if (onGoalReached != null) 
@@ -27,6 +23,7 @@ public class GameEventsManager : MonoBehaviour
         }
     }
     
+    public event Action onRestartLevel;
     public void RestartLevel() 
     {
         if (onRestartLevel != null) 
@@ -35,19 +32,21 @@ public class GameEventsManager : MonoBehaviour
         }
     }
 
-    public void CaptureReplayFrame(ReplayFrameInfo info) 
+    public event Action<ReplayFrameInfo> onRecordReplayFrame;
+    public void RecordReplayFrame(ReplayFrameInfo info) 
     {
-        if (onCaptureReplayFrame != null) 
+        if (onRecordReplayFrame != null) 
         {
-            onCaptureReplayFrame(info);
+            onRecordReplayFrame(info);
         }
     }
 
-    public void ResetReplay() 
+    public event Action<ReplayObject> onReplayStarted;
+    public void ReplayStarted(ReplayObject replayObject) 
     {
-        if (onResetReplay != null) 
+        if (onReplayStarted != null) 
         {
-            onResetReplay();
+            onReplayStarted(replayObject);
         }
     }
 }

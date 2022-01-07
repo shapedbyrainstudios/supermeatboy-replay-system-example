@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // This script is a basic 2D character controller that allows
@@ -13,9 +12,9 @@ public class CharacterController2D : MonoBehaviour
 {
 
     [Header("Movement Params")]
-    public float runSpeed = 6.0f;
-    public float jumpSpeed = 8.0f;
-    public float gravityScale = 20.0f;
+    [SerializeField] private float runSpeed = 6.0f;
+    [SerializeField] private float jumpSpeed = 8.0f;
+    [SerializeField] private float gravityScale = 20.0f;
 
     [Header("Respawn Point")]
     [SerializeField] private Transform respawnPoint;
@@ -68,7 +67,7 @@ public class CharacterController2D : MonoBehaviour
     {
         // record frame info for replay
         ReplayFrameInfo info = new ReplayFrameInfo((Vector2) this.transform.position, isGrounded, rb.velocity, sr.color.a, deathThisFrame);
-        GameEventsManager.instance.CaptureReplayFrame(info);
+        GameEventsManager.instance.RecordReplayFrame(info);
         deathThisFrame = false;
     }
 
@@ -167,10 +166,17 @@ public class CharacterController2D : MonoBehaviour
 
     private IEnumerator HandleDeath() 
     {
+        // freeze player movemet
+        rb.gravityScale = 0;
         disableMovement = true;
         rb.velocity = Vector3.zero;
+        // prevent other collisions
+        coll.enabled = false;
+        // hide the player visual
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
+        // play the death particles
         deathBurstParticles.Play();
+        // keep track of death for the replay
         deathThisFrame = true;
 
         yield return new WaitForSeconds(0.4f);
@@ -189,27 +195,34 @@ public class CharacterController2D : MonoBehaviour
 
     private void OnGoalReached() 
     {
+        // freeze movement
+        rb.gravityScale = 0;
         rb.velocity = Vector3.zero;
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
         disableMovement = true;
+        // hide player visual
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
     }
 
     private void OnRestartLevel() 
     {
-        StartCoroutine(RestartLevelAfterTime());
-    }
-
-    private IEnumerator RestartLevelAfterTime() 
-    {
-        yield return new WaitForSeconds(0.2f);
+        // ensure we don't jump right away on reset, since
+        // the submit button is the same as the jump button.
+        // this is specific to the InputManager in this project
+        InputManager.instance.RegisterJumpPressedThisFrame(); 
+        // respawn
         Respawn();
     }
 
     private void Respawn() 
     {
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
-        this.transform.position = respawnPoint.position;
+        // enable movement
+        rb.gravityScale = gravityScale;
+        coll.enabled = true;
         disableMovement = false;
+        // show player visual
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
+        // move the player to the respawn point
+        this.transform.position = respawnPoint.position;
     }
 
 }
