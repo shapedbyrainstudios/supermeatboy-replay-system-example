@@ -578,38 +578,6 @@ Transform:
   m_Father: {fileID: 5139186509969419626}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &253615980
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 253615981}
-  m_Layer: 0
-  m_Name: Recorders
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &253615981
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253615980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 645190904}
-  - {fileID: 351300362}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &316749316
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,51 +733,6 @@ MonoBehaviour:
   m_DefaultActionMap: game
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!1 &351300361
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 351300362}
-  - component: {fileID: 351300363}
-  m_Layer: 0
-  m_Name: SawBlade
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &351300362
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351300361}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 253615981}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &351300363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351300361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642f33c13330648449849e831767cb54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  replayObjectPrefab: {fileID: 3956171592815210855, guid: 6ee0ca6dcd50b954886276076b790c36, type: 3}
-  newCameraTarget: 0
 --- !u!1 &360394623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,51 +1081,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539196008}
   m_CullTransparentMesh: 1
---- !u!1 &645190902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 645190904}
-  - component: {fileID: 645190903}
-  m_Layer: 0
-  m_Name: PlayerRecorder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &645190903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645190902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642f33c13330648449849e831767cb54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  replayObjectPrefab: {fileID: 7313225374273794774, guid: 511e1e593b1367b43aec5b06cd502c24, type: 3}
-  newCameraTarget: 0
---- !u!4 &645190904
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645190902}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 253615981}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711646439
 GameObject:
   m_ObjectHideFlags: 0
@@ -18415,7 +18293,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4757187544536137581, guid: c9c1f08a493e0d04f85302617ab6305e, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4757187544536137581, guid: c9c1f08a493e0d04f85302617ab6305e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18476,7 +18354,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6628373893331191649, guid: 511e1e593b1367b43aec5b06cd502c24, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6628373893331191649, guid: 511e1e593b1367b43aec5b06cd502c24, type: 3}
       propertyPath: m_LocalPosition.x
