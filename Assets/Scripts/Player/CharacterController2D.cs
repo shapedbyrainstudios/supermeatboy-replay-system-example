@@ -68,7 +68,7 @@ public class CharacterController2D : MonoBehaviour
     private void LateUpdate()
     {
         // record frame info for replay
-        ReplayFrameInfo info = new PlayerReplayFrameInfo((Vector2) this.transform.position, isGrounded, rb.velocity, sr.color.a, facingRight, deathThisFrame);
+        ReplayFrameInfo info = new PlayerReplayFrameInfo(this.transform.position, isGrounded, rb.velocity, sr.color.a, facingRight, deathThisFrame);
         recorder.RecordReplayFrame(info);
         deathThisFrame = false;
     }
@@ -180,10 +180,12 @@ public class CharacterController2D : MonoBehaviour
         deathBurstParticles.Play();
         // keep track of death for the replay
         deathThisFrame = true;
-
+        
         yield return new WaitForSeconds(0.4f);
         
         Respawn();
+        // start a new recording for the replay
+        recorder.StartNewRecording();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) 
@@ -225,6 +227,8 @@ public class CharacterController2D : MonoBehaviour
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
         // move the player to the respawn point
         this.transform.position = respawnPoint.position;
+        // send out event
+        GameEventsManager.instance.PlayerRespawn();
     }
 
 }

@@ -40,4 +40,13 @@ public class GameEventsManager : MonoBehaviour
             onChangeCameraTarget(newTarget);
         }
     }
+
+    public event Action onPlayerRespawn;
+    public void PlayerRespawn() 
+    {
+        if (onPlayerRespawn != null) 
+        {
+            onPlayerRespawn();
+        }
+    }
 }

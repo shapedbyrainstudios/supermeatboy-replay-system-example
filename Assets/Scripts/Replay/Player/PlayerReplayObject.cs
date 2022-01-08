@@ -18,10 +18,7 @@ public class PlayerReplayObject : ReplayObject
 
     public override void SetDataForFrame(ReplayFrameInfo info) 
     {
-        if (info.replayType != ReplayType.PLAYER) 
-        {
-            return;
-        }
+        // typecast the info
         PlayerReplayFrameInfo playerInfo = (PlayerReplayFrameInfo) info;
         // position
         this.transform.position = playerInfo.position;

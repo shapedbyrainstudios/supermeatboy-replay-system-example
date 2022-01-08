@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class ReplayFrameInfo
 {
-    public ReplayType replayType;
-
     [HideInInspector]
-    public Vector2 position;
+    public Vector3 position;
 }

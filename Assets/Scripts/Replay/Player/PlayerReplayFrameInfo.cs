@@ -10,9 +10,8 @@ public class PlayerReplayFrameInfo : ReplayFrameInfo
     public bool facingRight { get; private set; }
     public bool deathThisFrame { get; private set; }
 
-    public PlayerReplayFrameInfo(Vector2 position, bool isGrounded, Vector2 movement, float spriteAlpha, bool facingRight, bool deathThisFrame) 
+    public PlayerReplayFrameInfo(Vector3 position, bool isGrounded, Vector2 movement, float spriteAlpha, bool facingRight, bool deathThisFrame) 
     {
-        this.replayType = ReplayType.PLAYER;
         // position
         this.position = position;
         // animator info

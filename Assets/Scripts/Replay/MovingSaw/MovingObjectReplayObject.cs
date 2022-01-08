@@ -6,10 +6,7 @@ public class MovingObjectReplayObject : ReplayObject
 {
     public override void SetDataForFrame(ReplayFrameInfo info) 
     {
-        if (info.replayType != ReplayType.MOVING_OBJECT) 
-        {
-            return;
-        }
+        // typecast the info
         MovingObjectReplayInfo objInfo = (MovingObjectReplayInfo) info;
         // position
         this.transform.position = objInfo.position;

@@ -67,18 +67,19 @@ public class ReplayManager : MonoBehaviour
         // if we get here and hasMoreFrames is false, then the replay has finished and we need to restart
         if (!hasMoreFrames) 
         {
-            StartReplay();
+            RestartReplay();
         }
     }
 
     private void OnGoalReached() 
     {
-        StartReplay();
         Debug.Log("Starting Replay");
+        StartReplay();
     }
 
     private void OnRestartLevel() 
     {
+        Debug.Log("Restarting Replay");
         EndReplay();
     }
 
@@ -88,6 +89,14 @@ public class ReplayManager : MonoBehaviour
         foreach (Recorder recorder in recorders) 
         {
             recorder.StartReplay();
+        }
+    }
+
+    private void RestartReplay() 
+    {
+        foreach (Recorder recorder in recorders) 
+        {
+            recorder.RestartReplay();
         }
     }
 

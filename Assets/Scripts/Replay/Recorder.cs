@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Recorder : MonoBehaviour
 {
-    [Header("Type to replay for this recorder")]
-    [SerializeField] private ReplayType replayType;
-
     [Header("Prefab to Instantiate")]
     [SerializeField] private GameObject replayObjectPrefab;
+
+    [Header("Camera Targeting")]
+    [SerializeField] private bool newCameraTarget = false;
     
-    public Queue<ReplayFrameInfo> replayQueue { get; private set; }
+    public Queue<ReplayFrameInfo> recordingQueue { get; private set; }
+
+    public List<Recording> recordings;
 
     public bool isDoingReplay { get; private set; } = false;
 
-    private ReplayObject currentReplayObject;
-    private Queue<ReplayFrameInfo> currentReplayQueue;
-
     private void Awake() 
     {
-        replayQueue = new Queue<ReplayFrameInfo>();
+        recordingQueue = new Queue<ReplayFrameInfo>();
+        recordings = new List<Recording>();
     }
 
     private void Start() 
@@ -34,12 +34,16 @@ public class Recorder : MonoBehaviour
             return;
         }
 
-        if (currentReplayQueue.Count != 0) 
+        bool hasMoreFrames = false;
+        foreach(Recording recording in recordings) 
         {
-            ReplayFrameInfo info = currentReplayQueue.Dequeue();
-            currentReplayObject.SetDataForFrame(info);
+            // the result of this will always be whether the last
+            // recording in the list has finished.
+            hasMoreFrames = recording.PlayNextFrame();
         }
-        else 
+
+        // check if we're finished
+        if (!hasMoreFrames) 
         {
             // if we're finished replaying the queue, we're no longer replaying
             isDoingReplay = false;
@@ -48,52 +52,66 @@ public class Recorder : MonoBehaviour
 
     public void RecordReplayFrame(ReplayFrameInfo info) 
     {
-        if (!isDoingReplay) 
-        {
-            replayQueue.Enqueue(info);
-        }
+        recordingQueue.Enqueue(info);
     }
 
     public void StartReplay()
     {
-        isDoingReplay = true;
-        DestroyCurrentReplayObjectIfExists();
-        currentReplayQueue = new Queue<ReplayFrameInfo>(replayQueue);
-        InstantiateReplayObject();
-        if (currentReplayObject.isNewCameraTarget) 
+        // add the current recording to our recordings list
+        AddRecording();
+        // instantiate all of the replay objects
+        foreach (Recording recording in recordings) 
         {
-            GameEventsManager.instance.ChangeCameraTarget(currentReplayObject.gameObject);
+            recording.InstantiateReplayObject(replayObjectPrefab);
         }
+        // if this recorder is intended to produce the new camera target, send out
+        //  an event using the instantiated object for the last recording that was added
+        if (newCameraTarget) 
+        {
+            Recording lastRecording = recordings[recordings.Count - 1];
+            GameEventsManager.instance.ChangeCameraTarget(lastRecording.replayObject.gameObject);
+        }
+        isDoingReplay = true;
+    }
+
+    public void RestartReplay() 
+    {
+        // instantiate all of the replay objects
+        foreach (Recording recording in recordings) 
+        {
+            recording.RestartFromBeginning();
+        }
+        // start doing replay again
+        isDoingReplay = true;
+    }
+
+    private void AddRecording() 
+    {
+        // add the current recording to a the list of recordings
+        Queue<ReplayFrameInfo> archivedRecordingQueue = new Queue<ReplayFrameInfo>(recordingQueue);
+        recordings.Add(new Recording(archivedRecordingQueue));
+        // reset the current recording queue for the next recording
+        this.recordingQueue.Clear();
     }
 
     public void Reset() 
     {
         isDoingReplay = false;
-        this.replayQueue.Clear();
-        DestroyCurrentReplayObjectIfExists();
+        this.recordingQueue.Clear();
+        CleanupReplayObjects();
+        this.recordings = new List<Recording>();
     }
 
-    private void InstantiateReplayObject() 
+    private void CleanupReplayObjects() 
     {
-        if (replayQueue.Count != 0) 
+        foreach (Recording recording in recordings) 
         {
-            ReplayFrameInfo startingInfo = replayQueue.Peek();
-            currentReplayObject = Instantiate(replayObjectPrefab, startingInfo.position, Quaternion.identity)
-                .GetComponent<ReplayObject>();
-            
-            // TODO - do this better
-            if (startingInfo.replayType == ReplayType.PLAYER)
-            {
-                currentReplayObject.isNewCameraTarget = true;
-            }
-        }
+            recording.DestroyReplayObjectIfExists();
+        } 
     }
 
-    private void DestroyCurrentReplayObjectIfExists() 
+    public void StartNewRecording() 
     {
-        if (currentReplayObject != null) 
-        {
-            Destroy(currentReplayObject.gameObject);
-        }
+        AddRecording();
     }
 }

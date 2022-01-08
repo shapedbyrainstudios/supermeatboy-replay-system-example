@@ -31,13 +31,14 @@ public class MovingObject : MonoBehaviour
         // subscribe to events
         GameEventsManager.instance.onGoalReached += OnGoalReached;
         GameEventsManager.instance.onRestartLevel += OnRestartLevel;
+        GameEventsManager.instance.onPlayerRespawn += OnPlayerDeath;
     }
 
     private void OnDestroy() 
     {
         // unsubscribe from events
         GameEventsManager.instance.onGoalReached -= OnGoalReached;
-        GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
+        GameEventsManager.instance.onPlayerRespawn -= OnPlayerDeath;
     }
 
     private void OnGoalReached() 
@@ -48,6 +49,11 @@ public class MovingObject : MonoBehaviour
     private void OnRestartLevel() 
     {
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
+    }
+
+    private void OnPlayerDeath() 
+    {
+        recorder.Reset();
     }
 
     private void Update() 
@@ -65,7 +71,7 @@ public class MovingObject : MonoBehaviour
 
     private void LateUpdate() 
     {
-        ReplayFrameInfo info = new MovingObjectReplayInfo((Vector2) this.transform.position, (Vector2) this.transform.localScale);
+        ReplayFrameInfo info = new MovingObjectReplayInfo(this.transform.position, this.transform.localScale);
         recorder.RecordReplayFrame(info);
     }
 
