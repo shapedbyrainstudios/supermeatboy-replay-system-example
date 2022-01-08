@@ -16,21 +16,21 @@ public class PlayerReplayObject : ReplayObject
         deathBurstParticles.Stop();
     }
 
-    public override void SetDataForFrame(ReplayFrameInfo info) 
+    public override void SetDataForFrame(ReplayData data) 
     {
         // typecast the info
-        PlayerReplayFrameInfo playerInfo = (PlayerReplayFrameInfo) info;
+        PlayerReplayData playerData = (PlayerReplayData) data;
         // position
-        this.transform.position = playerInfo.position;
+        this.transform.position = playerData.position;
         // animator
-        animator.SetBool("isGrounded", playerInfo.isGrounded);
-        animator.SetFloat("movementX", playerInfo.movement.x);
-        animator.SetFloat("movementY", playerInfo.movement.y);
+        animator.SetBool("isGrounded", playerData.isGrounded);
+        animator.SetFloat("movementX", playerData.movement.x);
+        animator.SetFloat("movementY", playerData.movement.y);
         // sprite alpha
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, playerInfo.spriteAlpha);
-        sr.flipX = !playerInfo.facingRight;
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, playerData.spriteAlpha);
+        sr.flipX = !playerData.facingRight;
         // particle burst
-        if (playerInfo.deathThisFrame) 
+        if (playerData.deathThisFrame) 
         {
             deathBurstParticles.Play();
         }

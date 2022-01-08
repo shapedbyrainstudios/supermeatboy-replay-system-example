@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerReplayFrameInfo : ReplayFrameInfo
+public class PlayerReplayData : ReplayData
 {
     public bool isGrounded { get; private set; }
     public Vector2 movement { get; private set; }
@@ -10,7 +10,7 @@ public class PlayerReplayFrameInfo : ReplayFrameInfo
     public bool facingRight { get; private set; }
     public bool deathThisFrame { get; private set; }
 
-    public PlayerReplayFrameInfo(Vector3 position, bool isGrounded, Vector2 movement, float spriteAlpha, bool facingRight, bool deathThisFrame) 
+    public PlayerReplayData(Vector3 position, bool isGrounded, Vector2 movement, float spriteAlpha, bool facingRight, bool deathThisFrame) 
     {
         // position
         this.position = position;

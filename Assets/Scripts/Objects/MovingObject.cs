@@ -71,8 +71,8 @@ public class MovingObject : MonoBehaviour
 
     private void LateUpdate() 
     {
-        ReplayFrameInfo info = new MovingObjectReplayInfo(this.transform.position, this.transform.localScale);
-        recorder.RecordReplayFrame(info);
+        ReplayData data = new MovingObjectReplayData(this.transform.position, this.transform.localScale);
+        recorder.RecordReplayFrame(data);
     }
 
     private LinkedListNode<Transform> FindNextNodeCircular()

@@ -5,37 +5,18 @@ using UnityEngine;
 public class Recording
 {
     public ReplayObject replayObject;
-    public Queue<ReplayFrameInfo> recordingQueue { get; private set; }
-    public Queue<ReplayFrameInfo> replayQueue { get; private set; }
+    public Queue<ReplayData> originalQueue { get; private set; }
+    public Queue<ReplayData> replayQueue { get; private set; }
 
-    public Recording(Queue<ReplayFrameInfo> recordingQueue)
+    public Recording(Queue<ReplayData> recordingQueue)
     {
-        this.recordingQueue = recordingQueue;
-        this.replayQueue = new Queue<ReplayFrameInfo>(recordingQueue);
+        this.originalQueue = new Queue<ReplayData>(recordingQueue);
+        this.replayQueue = new Queue<ReplayData>(recordingQueue);
     }
 
     public void RestartFromBeginning() 
     {
-        this.replayQueue = new Queue<ReplayFrameInfo>(recordingQueue);
-    }
-
-    public void DestroyReplayObjectIfExists() 
-    {
-        if (replayObject != null) 
-        {
-            Object.Destroy(replayObject.gameObject);
-        }
-    }
-
-    public void InstantiateReplayObject(GameObject replayObjectPrefab) 
-    {
-        if (replayQueue.Count != 0) 
-        {
-            ReplayFrameInfo startingInfo = replayQueue.Peek();
-            ReplayObject replayObject = Object.Instantiate(replayObjectPrefab, startingInfo.position, Quaternion.identity)
-                .GetComponent<ReplayObject>();
-            this.replayObject = replayObject;
-        }
+        this.replayQueue = new Queue<ReplayData>(originalQueue);
     }
 
     public bool PlayNextFrame() 
@@ -48,10 +29,30 @@ public class Recording
         bool hasMoreFrames = false;
         if (replayQueue.Count != 0) 
         {
-            ReplayFrameInfo info = replayQueue.Dequeue();
-            replayObject.SetDataForFrame(info);
+            ReplayData data = replayQueue.Dequeue();
+            replayObject.SetDataForFrame(data);
             hasMoreFrames = true;
         }
         return hasMoreFrames;
     }
+
+    public void InstantiateReplayObject(GameObject replayObjectPrefab) 
+    {
+        if (replayQueue.Count != 0) 
+        {
+            ReplayData startingData = replayQueue.Peek();
+            ReplayObject replayObject = Object.Instantiate(replayObjectPrefab, startingData.position, Quaternion.identity)
+                .GetComponent<ReplayObject>();
+            this.replayObject = replayObject;
+        }
+    }
+
+    public void DestroyReplayObjectIfExists() 
+    {
+        if (replayObject != null) 
+        {
+            Object.Destroy(replayObject.gameObject);
+        }
+    }
+
 }

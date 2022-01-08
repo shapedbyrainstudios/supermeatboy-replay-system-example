@@ -68,8 +68,8 @@ public class CharacterController2D : MonoBehaviour
     private void LateUpdate()
     {
         // record frame info for replay
-        ReplayFrameInfo info = new PlayerReplayFrameInfo(this.transform.position, isGrounded, rb.velocity, sr.color.a, facingRight, deathThisFrame);
-        recorder.RecordReplayFrame(info);
+        ReplayData data = new PlayerReplayData(this.transform.position, isGrounded, rb.velocity, sr.color.a, facingRight, deathThisFrame);
+        recorder.RecordReplayFrame(data);
         deathThisFrame = false;
     }
 

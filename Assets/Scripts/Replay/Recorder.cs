@@ -10,7 +10,7 @@ public class Recorder : MonoBehaviour
     [Header("Camera Targeting")]
     [SerializeField] private bool newCameraTarget = false;
     
-    public Queue<ReplayFrameInfo> recordingQueue { get; private set; }
+    public Queue<ReplayData> recordingQueue { get; private set; }
 
     public List<Recording> recordings;
 
@@ -18,7 +18,7 @@ public class Recorder : MonoBehaviour
 
     private void Awake() 
     {
-        recordingQueue = new Queue<ReplayFrameInfo>();
+        recordingQueue = new Queue<ReplayData>();
         recordings = new List<Recording>();
     }
 
@@ -50,9 +50,9 @@ public class Recorder : MonoBehaviour
         }
     }
 
-    public void RecordReplayFrame(ReplayFrameInfo info) 
+    public void RecordReplayFrame(ReplayData data) 
     {
-        recordingQueue.Enqueue(info);
+        recordingQueue.Enqueue(data);
     }
 
     public void StartReplay()
@@ -88,8 +88,8 @@ public class Recorder : MonoBehaviour
     private void AddRecording() 
     {
         // add the current recording to a the list of recordings
-        Queue<ReplayFrameInfo> archivedRecordingQueue = new Queue<ReplayFrameInfo>(recordingQueue);
-        recordings.Add(new Recording(archivedRecordingQueue));
+        Queue<ReplayData> newRecordingQueue = new Queue<ReplayData>(recordingQueue);
+        recordings.Add(new Recording(newRecordingQueue));
         // reset the current recording queue for the next recording
         this.recordingQueue.Clear();
     }
