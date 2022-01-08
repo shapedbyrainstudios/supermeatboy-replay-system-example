@@ -32,21 +32,12 @@ public class GameEventsManager : MonoBehaviour
         }
     }
 
-    public event Action<ReplayFrameInfo> onRecordReplayFrame;
-    public void RecordReplayFrame(ReplayFrameInfo info) 
+    public event Action<GameObject> onChangeCameraTarget;
+    public void ChangeCameraTarget(GameObject newTarget) 
     {
-        if (onRecordReplayFrame != null) 
+        if (onChangeCameraTarget != null) 
         {
-            onRecordReplayFrame(info);
-        }
-    }
-
-    public event Action<ReplayObject> onReplayStarted;
-    public void ReplayStarted(ReplayObject replayObject) 
-    {
-        if (onReplayStarted != null) 
-        {
-            onReplayStarted(replayObject);
+            onChangeCameraTarget(newTarget);
         }
     }
 }

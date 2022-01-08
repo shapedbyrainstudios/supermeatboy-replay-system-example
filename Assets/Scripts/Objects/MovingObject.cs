@@ -12,12 +12,42 @@ public class MovingObject : MonoBehaviour
 
     private LinkedList<Transform> waypointsLinkedList;
 
-    protected LinkedListNode<Transform> targetNode;
+    private LinkedListNode<Transform> targetNode;
+
+    private SpriteRenderer sr;
+
+    private Recorder recorder;
 
     private void Awake() 
     {
         InitializeWaypoints();
         targetNode = waypointsLinkedList.First;
+        sr = GetComponent<SpriteRenderer>();
+        recorder = GetComponent<Recorder>();
+    }
+
+    private void Start() 
+    {
+        // subscribe to events
+        GameEventsManager.instance.onGoalReached += OnGoalReached;
+        GameEventsManager.instance.onRestartLevel += OnRestartLevel;
+    }
+
+    private void OnDestroy() 
+    {
+        // unsubscribe from events
+        GameEventsManager.instance.onGoalReached -= OnGoalReached;
+        GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
+    }
+
+    private void OnGoalReached() 
+    {
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
+    }
+
+    private void OnRestartLevel() 
+    {
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
     }
 
     private void Update() 
@@ -31,6 +61,12 @@ public class MovingObject : MonoBehaviour
         }
         // move
         this.transform.position = newPosition;
+    }
+
+    private void LateUpdate() 
+    {
+        ReplayFrameInfo info = new MovingObjectReplayInfo((Vector2) this.transform.position, (Vector2) this.transform.localScale);
+        recorder.RecordReplayFrame(info);
     }
 
     private LinkedListNode<Transform> FindNextNodeCircular()

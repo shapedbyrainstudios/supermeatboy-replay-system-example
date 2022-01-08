@@ -18,7 +18,7 @@ public class FollowTarget : MonoBehaviour
     private void Start() 
     {
         // subscribe to events
-        GameEventsManager.instance.onReplayStarted += OnReplayStarted;
+        GameEventsManager.instance.onChangeCameraTarget += OnChangeCameraTarget;
         GameEventsManager.instance.onRestartLevel += OnRestartLevel;
 
         originalTargetTransform = targetTransform;
@@ -27,7 +27,7 @@ public class FollowTarget : MonoBehaviour
     private void OnDestroy() 
     {
         // unsubscribe from events
-        GameEventsManager.instance.onReplayStarted -= OnReplayStarted;
+        GameEventsManager.instance.onChangeCameraTarget -= OnChangeCameraTarget;
         GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
     }
 
@@ -52,19 +52,18 @@ public class FollowTarget : MonoBehaviour
         this.transform.position = new Vector3(newPosX, newPosY, this.transform.position.z);
     }
 
-    private void OnReplayStarted(ReplayObject replayObject) 
+    private void OnChangeCameraTarget(GameObject replayObject) 
     {
-        this.targetTransform = replayObject.transform;
+        if (replayObject != null) 
+        {
+            this.targetTransform = replayObject.transform;
+        }
+        
     }
 
     private void OnRestartLevel() 
     {
         this.targetTransform = this.originalTargetTransform;
-    }
-
-    public void SetTarget(Transform newTarget) 
-    {
-        this.targetTransform = newTarget;
     }
 
 }

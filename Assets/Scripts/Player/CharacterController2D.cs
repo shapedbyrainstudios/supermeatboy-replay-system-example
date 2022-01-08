@@ -27,6 +27,7 @@ public class CharacterController2D : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer sr;
+    private Recorder recorder;
 
     // input parameters for movement
     Vector2 moveDirection = Vector2.zero;
@@ -44,6 +45,7 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         sr = GetComponentInChildren<SpriteRenderer>();
+        recorder = GetComponent<Recorder>();
 
         rb.gravityScale = gravityScale;
         deathBurstParticles.Stop();
@@ -63,11 +65,11 @@ public class CharacterController2D : MonoBehaviour
         GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
     }
 
-    private void Update() 
+    private void LateUpdate()
     {
         // record frame info for replay
-        ReplayFrameInfo info = new ReplayFrameInfo((Vector2) this.transform.position, isGrounded, rb.velocity, sr.color.a, deathThisFrame);
-        GameEventsManager.instance.RecordReplayFrame(info);
+        ReplayFrameInfo info = new PlayerReplayFrameInfo((Vector2) this.transform.position, isGrounded, rb.velocity, sr.color.a, facingRight, deathThisFrame);
+        recorder.RecordReplayFrame(info);
         deathThisFrame = false;
     }
 
