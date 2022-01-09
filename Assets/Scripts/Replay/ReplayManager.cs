@@ -31,7 +31,7 @@ public class ReplayManager : MonoBehaviour
     {
         // unsubscribe from events
         GameEventsManager.instance.onGoalReached -= OnGoalReached;
-        GameEventsManager.instance.onRestartLevel += OnRestartLevel;
+        GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
     }
 
     public void RegisterRecorder(Recorder recorder) 
@@ -73,13 +73,11 @@ public class ReplayManager : MonoBehaviour
 
     private void OnGoalReached() 
     {
-        Debug.Log("Starting Replay");
         StartReplay();
     }
 
     private void OnRestartLevel() 
     {
-        Debug.Log("Restarting Replay");
         EndReplay();
     }
 

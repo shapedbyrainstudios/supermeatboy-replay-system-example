@@ -88,8 +88,7 @@ public class Recorder : MonoBehaviour
     private void AddRecording() 
     {
         // add the current recording to a the list of recordings
-        Queue<ReplayData> newRecordingQueue = new Queue<ReplayData>(recordingQueue);
-        recordings.Add(new Recording(newRecordingQueue));
+        recordings.Add(new Recording(recordingQueue));
         // reset the current recording queue for the next recording
         this.recordingQueue.Clear();
     }
@@ -98,16 +97,13 @@ public class Recorder : MonoBehaviour
     {
         isDoingReplay = false;
         this.recordingQueue.Clear();
-        CleanupReplayObjects();
-        this.recordings = new List<Recording>();
-    }
-
-    private void CleanupReplayObjects() 
-    {
+        // cleanup replay objects
         foreach (Recording recording in recordings) 
         {
             recording.DestroyReplayObjectIfExists();
-        } 
+        }
+        // re-initialize the recordings
+        this.recordings = new List<Recording>();
     }
 
     public void StartNewRecording() 

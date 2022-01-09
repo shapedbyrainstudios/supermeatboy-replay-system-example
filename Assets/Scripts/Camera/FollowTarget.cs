@@ -52,11 +52,11 @@ public class FollowTarget : MonoBehaviour
         this.transform.position = new Vector3(newPosX, newPosY, this.transform.position.z);
     }
 
-    private void OnChangeCameraTarget(GameObject replayObject) 
+    private void OnChangeCameraTarget(GameObject newTarget) 
     {
-        if (replayObject != null) 
+        if (newTarget != null) 
         {
-            this.targetTransform = replayObject.transform;
+            this.targetTransform = newTarget.transform;
         }
         
     }
