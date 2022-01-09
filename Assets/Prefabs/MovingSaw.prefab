@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 5815136549995611639}
   - component: {fileID: 6475494535510911449}
   - component: {fileID: 4183967726032944657}
-  - component: {fileID: 7901310774722872349}
   m_Layer: 6
   m_Name: Saw
   m_TagString: Untagged
@@ -193,20 +192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   waypointsParent: {fileID: 4339217351868451088}
---- !u!114 &7901310774722872349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5548665588876342878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642f33c13330648449849e831767cb54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  replayType: 1
-  replayObjectPrefab: {fileID: 4757187544536137582, guid: c9c1f08a493e0d04f85302617ab6305e, type: 3}
 --- !u!1 &7233178020769722499
 GameObject:
   m_ObjectHideFlags: 0

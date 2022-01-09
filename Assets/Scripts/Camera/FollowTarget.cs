@@ -17,11 +17,10 @@ public class FollowTarget : MonoBehaviour
 
     private void Start() 
     {
+        originalTargetTransform = targetTransform;
         // subscribe to events
         GameEventsManager.instance.onChangeCameraTarget += OnChangeCameraTarget;
         GameEventsManager.instance.onRestartLevel += OnRestartLevel;
-
-        originalTargetTransform = targetTransform;
     }
 
     private void OnDestroy() 
@@ -58,7 +57,6 @@ public class FollowTarget : MonoBehaviour
         {
             this.targetTransform = newTarget.transform;
         }
-        
     }
 
     private void OnRestartLevel() 
