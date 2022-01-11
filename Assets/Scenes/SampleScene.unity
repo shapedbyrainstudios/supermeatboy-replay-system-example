@@ -444,6 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193942507}
   - component: {fileID: 193942503}
+  - component: {fileID: 193942506}
   - component: {fileID: 193942505}
   - component: {fileID: 193942504}
   m_Layer: 0
@@ -517,6 +518,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &193942506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193942502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642f33c13330648449849e831767cb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replayObjectPrefab: {fileID: 4491441336349310531, guid: ec798ffb07d45c24397fe075fec52e95, type: 3}
+  newCameraTarget: 1
 --- !u!4 &193942507
 Transform:
   m_ObjectHideFlags: 0
@@ -826,7 +841,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505882061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.75, y: 1.5, z: 0}
+  m_LocalPosition: {x: 51, y: -6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

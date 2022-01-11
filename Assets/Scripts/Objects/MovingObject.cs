@@ -15,12 +15,46 @@ public class MovingObject : MonoBehaviour
     private LinkedListNode<Transform> targetNode;
 
     private SpriteRenderer sr;
+    
+    private Recorder recorder;
 
     private void Awake() 
     {
         InitializeWaypoints();
         targetNode = waypointsLinkedList.First;
         sr = GetComponent<SpriteRenderer>();
+        recorder = GetComponent<Recorder>();
+    }
+
+    private void Start() 
+    {
+        // subscribe to events
+        GameEventsManager.instance.onGoalReached += OnGoalReached;
+        GameEventsManager.instance.onRestartLevel += OnRestartLevel;
+        GameEventsManager.instance.onPlayerRespawn += OnPlayerRespawn;
+    }
+
+    private void OnDestroy() 
+    {
+        // unsubscribe from events
+        GameEventsManager.instance.onGoalReached -= OnGoalReached;
+        GameEventsManager.instance.onRestartLevel -= OnRestartLevel;
+        GameEventsManager.instance.onPlayerRespawn -= OnPlayerRespawn;
+    }
+
+    private void OnGoalReached() 
+    {
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
+    }
+
+    private void OnRestartLevel() 
+    {
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1);
+    }
+
+    private void OnPlayerRespawn() 
+    {
+        recorder.Reset();
     }
 
     private void Update() 
@@ -34,6 +68,12 @@ public class MovingObject : MonoBehaviour
         }
         // move
         this.transform.position = newPosition;
+    }
+
+    private void LateUpdate() 
+    {
+        ReplayData data = new MovingObjectReplayData(this.transform.position, this.transform.localScale);
+        recorder.RecordReplayFrame(data);
     }
 
     private LinkedListNode<Transform> FindNextNodeCircular()
